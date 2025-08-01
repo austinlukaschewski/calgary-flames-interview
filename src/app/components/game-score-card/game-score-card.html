@@ -1,0 +1,26 @@
+<div class="card bg-base-100 shadow-sm">
+    <div class="card-body sm:flex-row sm:items-center sm:space-x-10">
+        @let home = boxscore()[0]; @let away = boxscore()[1];
+        <div
+            class="order-1 flex w-1/2 flex-1 items-center overflow-hidden text-ellipsis sm:w-full"
+            [class.font-bold]="winner() === home.team"
+            [class.text-gray-500]="winner() !== home.team"
+        >
+            <span class="flex-1">{{ home.team | teamName }}</span>
+            <span class="text-xl">{{ home.total }}</span>
+        </div>
+
+        <div
+            class="order-2 flex w-1/2 flex-1 items-center overflow-hidden text-ellipsis sm:order-3 sm:w-full"
+            [class.font-bold]="winner() === away.team"
+            [class.text-gray-500]="winner() !== away.team"
+        >
+            <span class="order-1 flex-1 sm:order-2 sm:flex-none">{{ away.team | teamName }}</span>
+            <span class="order-2 text-xl sm:order-1 sm:flex-1">{{ away.total }}</span>
+        </div>
+
+        <div class="order-3 sm:order-2">
+            <app-game-boxscore [boxscore]="boxscore()" />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="overflow-x-auto">
+    <table class="table table-zebra table-sm">
+        <thead>
+            <tr>
+                @for (col of columns; track col.label) {
+                <th [ngClass]="col.classes ?? []">{{ col.label }}</th>
+                }
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (row of data(); track row.player) {
+            <tr>
+                @for (col of columns; track col.label) {
+                <td [ngClass]="col.classes ?? []">{{ row[col.field] }}</td>
+                }
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

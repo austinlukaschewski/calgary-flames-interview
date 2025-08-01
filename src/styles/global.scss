@@ -1,0 +1,39 @@
+@use 'tailwind';
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    background-color: #f7f7f7 !important;
+    font-family: Inter, 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    scroll-behavior: smooth;
+
+    & {
+        --layout-padding: 1rem;
+        --padding-card: 1.25rem;
+
+        @media screen and (width >= 40rem) {
+            --layout-padding: 2rem;
+        }
+        @media screen and (width >= 64rem) {
+            --layout-padding: 3.12rem;
+        }
+    }
+}
+
+html,
+body {
+    height: 100vh;
+    min-height: 100vh;
+
+    @supports (height: 100svh) {
+        height: 100svh;
+    }
+}
+
+body {
+    margin: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

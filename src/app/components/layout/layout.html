@@ -1,0 +1,15 @@
+<nav class="navbar bg-base-100 shadow-md">
+    <button type="button" class="btn btn-ghost" routerLink="/">
+        <img class="h-12" [src]="'CGY' | teamLogo" />
+    </button>
+</nav>
+
+<main>
+    <router-outlet />
+
+    <footer>
+        <div class="mt-8 flex justify-center pt-4">
+            <span class="text-sm text-gray-500">Austin Lukaschewski</span>
+        </div>
+    </footer>
+</main>

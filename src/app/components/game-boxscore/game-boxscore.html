@@ -1,0 +1,23 @@
+<table class="table table-xs">
+    <thead>
+        <tr>
+            <td></td>
+            @let homeTeamBoxscore = boxscore()[0]; @for (value of homeTeamBoxscore.values; track value.period) {
+            <td class="text-center">{{ value.period }}</td>
+            }
+            <td class="text-center">T</td>
+        </tr>
+    </thead>
+
+    <tbody>
+        @for (value of boxscore(); track value.team) {
+        <tr>
+            <td>{{ value.team | teamName }}</td>
+            @for (period of value.values; track period.period) {
+            <td class="text-center">{{ period.goals }}</td>
+            }
+            <td class="text-center font-bold">{{ value.total }}</td>
+        </tr>
+        }
+    </tbody>
+</table>

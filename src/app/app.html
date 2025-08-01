@@ -1,2 +1,9 @@
-<app-nx-welcome></app-nx-welcome>
-<router-outlet></router-outlet>
+<div class="navbar bg-base-100 shadow-md">
+    <img class="h-12" routerLink="/" [src]="'CGY' | teamLogo" />
+</div>
+
+<main>
+    <router-outlet />
+
+    {{ data$ | async | json }}
+</main>

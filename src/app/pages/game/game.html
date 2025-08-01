@@ -1,0 +1,82 @@
+@let game = service.game$ | async;
+
+<div class="flex flex-col space-y-8">
+    <div class="flex">
+        <div class="flex-1">
+            <a class="btn btn-outline btn-primary btn-sm" routerLink="/games">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path
+                        fill-rule="evenodd"
+                        d="M9.53 2.47a.75.75 0 0 1 0 1.06L4.81 8.25H15a6.75 6.75 0 0 1 0 13.5h-3a.75.75 0 0 1 0-1.5h3a5.25 5.25 0 1 0 0-10.5H4.81l4.72 4.72a.75.75 0 1 1-1.06 1.06l-6-6a.75.75 0 0 1 0-1.06l6-6a.75.75 0 0 1 1.06 0Z"
+                        clip-rule="evenodd"
+                    />
+                </svg>
+                Back
+            </a>
+        </div>
+        <div class="w-full max-w-screen-sm">
+            <app-game-score-card [boxscore]="game.boxscore" />
+        </div>
+        <div class="flex-1"></div>
+    </div>
+
+    <div class="flex flex-col">
+        <h4>Team Stats</h4>
+        <div class="card bg-base-100 shadow-sm">
+            <div class="card-body">
+                <app-team-comparison-stat-table [data]="service.teamComparison$ | async" />
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col space-y-2">
+        <select
+            class="select select-bordered select-sm w-full max-w-xs focus:outline-none"
+            [(ngModel)]="service.selectedTeam"
+        >
+            <option [value]="game.homeTeam">{{ game.homeTeam | teamName }}</option>
+            <option [value]="game.awayTeam">{{ game.awayTeam | teamName }}</option>
+        </select>
+
+        <div class="card bg-base-100 shadow-sm">
+            <div class="card-body">
+                <div class="card-title">{{ service.selectedTeam() | teamName }} Event Map</div>
+                <select
+                    class="select select-bordered select-sm w-full max-w-[180px] focus:outline-none"
+                    [(ngModel)]="service.selectedEvent"
+                >
+                    @for (evt of service.eventOptions; track evt.label) {
+                    <option [value]="evt.label">{{ evt.label }}</option>
+                    }
+                </select>
+
+                <div class="flex flex-col items-center">
+                    <app-vega-chart
+                        [spec]="rinkSpec"
+                        [data]="service.heatmapData$ | async"
+                        [signals]="service.specSignals()"
+                    />
+
+                    <div class="form-control">
+                        <label class="label cursor-pointer">
+                            <input
+                                type="checkbox"
+                                class="checkbox-primary checkbox checkbox-sm"
+                                [(ngModel)]="service.showHeatmap"
+                                [disabled]="service.selectedEvent() === 'Goals'"
+                            />
+                            <span class="label-text ml-3">Show Heatmap</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+            <div class="card-title">{{ service.selectedTeam() | teamName }} Player Stats</div>
+            <app-player-stats-table [data]="service.selectedTeamPlayerStats$ | async" />
+        </div>
+    </div>
+</div>

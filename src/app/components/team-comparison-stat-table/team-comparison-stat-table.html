@@ -1,0 +1,30 @@
+<div class="overflow-x-auto">
+    <table class="table">
+        <thead>
+            <tr>
+                @for (col of columns; track col.label) {
+                <th [ngClass]="col.classes ?? []">{{ col.label }}</th>
+                }
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (row of data(); track row.team) {
+            <tr>
+                @for (col of columns; track col.label) { @if (col.field === 'team' || col.field === 'pims' || col.field
+                === 'sogs') {
+                <td
+                    [ngClass]="{
+              'sticky left-0 z-10 bg-base-100': col.field === 'team'
+            }"
+                >
+                    {{ row[col.field] | teamName }}
+                </td>
+                } @else {
+                <td [ngClass]="col.classes ?? []">{{ row[col.field] }}%</td>
+                } }
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,28 @@
+<div class="flex flex-col">
+    <h2>Games</h2>
+    <h4 class="text-gray-500">Click on a game card to view details</h4>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        @for (game of games$ | async; track game.id) {
+        <div class="card bg-base-100 shadow-sm hover:cursor-pointer hover:shadow-lg" [routerLink]="[game.id]">
+            <div class="card-body">
+                <div class="flex justify-end">
+                    <span class="text-sm text-gray-500">{{ game.gameDate | date: 'mediumDate' }}</span>
+                </div>
+                <table>
+                    <tbody>
+                        @for (score of game.boxscore; track score.team) {
+                        <tr
+                            [class.text-gray-500]="$index === 0 ? score.total < game.boxscore[1].total : score.total < game.boxscore[0].total"
+                            [class.font-bold]="$index === 0 ? score.total > game.boxscore[1].total : score.total > game.boxscore[0].total"
+                        >
+                            <td class="w-full">{{ score.team | teamName }}</td>
+                            <td>{{ score.total }}</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        }
+    </div>
+</div>
